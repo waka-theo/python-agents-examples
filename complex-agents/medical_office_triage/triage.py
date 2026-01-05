@@ -112,20 +112,20 @@ class TriageAgent(BaseAgent):
     def __init__(self) -> None:
         super().__init__(
             instructions=load_prompt('triage_prompt.yaml'),
-            stt="assemblyai/universal-streaming",
-            llm="openai/gpt-4.1-mini",
-            tts="cartesia/sonic-2:6f84f4b8-58a2-430c-8c79-688dad597532",
+            stt=deepgram.STT(model="nova-2", language="fr"),
+            llm=openai.LLM(model="gpt-4o-mini"),
+            tts=cartesia.TTS(model="sonic-3", voice="735287ee-ce91-4b08-8de4-63315c5ba1fb", language="fr"),
             vad=silero.VAD.load()
         )
 
     @function_tool
     async def transfer_to_support(self, context: RunContext_T) -> Agent:
-        await self.session.say("I'll transfer you to our Patient Support team who can help with your medical services request.")
+        await self.session.say("Je vous transfère à notre équipe de support patient qui pourra vous aider avec votre demande de services médicaux.")
         return await self._transfer_to_agent("support", context)
 
     @function_tool
     async def transfer_to_billing(self, context: RunContext_T) -> Agent:
-        await self.session.say("I'll transfer you to our Medical Billing department who can assist with your insurance and payment questions.")
+        await self.session.say("Je vous transfère au service de facturation médicale qui pourra vous aider avec vos questions d'assurance et de paiement.")
         return await self._transfer_to_agent("billing", context)
 
 
@@ -133,20 +133,20 @@ class SupportAgent(BaseAgent):
     def __init__(self) -> None:
         super().__init__(
             instructions=load_prompt('support_prompt.yaml'),
-            stt=deepgram.STT(),
+            stt=deepgram.STT(model="nova-2", language="fr"),
             llm=openai.LLM(model="gpt-4o-mini"),
-            tts=cartesia.TTS(),
+            tts=cartesia.TTS(model="sonic-3", voice="c9115185-0086-4cf4-bfdd-0d36425db387", language="fr"),
             vad=silero.VAD.load()
         )
 
     @function_tool
     async def transfer_to_triage(self, context: RunContext_T) -> Agent:
-        await self.session.say("I'll transfer you back to our Medical Office Triage agent who can better direct your inquiry.")
+        await self.session.say("Je vous retransfère à notre agent de triage qui pourra mieux orienter votre demande.")
         return await self._transfer_to_agent("triage", context)
 
     @function_tool
     async def transfer_to_billing(self, context: RunContext_T) -> Agent:
-        await self.session.say("I'll transfer you to our Medical Billing department for assistance with your insurance and payment questions.")
+        await self.session.say("Je vous transfère au service de facturation médicale pour vous aider avec vos questions d'assurance et de paiement.")
         return await self._transfer_to_agent("billing", context)
 
 
@@ -154,20 +154,20 @@ class BillingAgent(BaseAgent):
     def __init__(self) -> None:
         super().__init__(
             instructions=load_prompt('billing_prompt.yaml'),
-            stt=deepgram.STT(),
+            stt=deepgram.STT(model="nova-2", language="fr"),
             llm=openai.LLM(model="gpt-4o-mini"),
-            tts=cartesia.TTS(),
+            tts=cartesia.TTS(model="sonic-3", voice="ab636c8b-9960-4fb3-bb0c-b7b655fb9745", language="fr"),
             vad=silero.VAD.load()
         )
 
     @function_tool
     async def transfer_to_triage(self, context: RunContext_T) -> Agent:
-        await self.session.say("I'll transfer you back to our Medical Office Triage agent who can better direct your inquiry.")
+        await self.session.say("Je vous retransfère à notre agent de triage qui pourra mieux orienter votre demande.")
         return await self._transfer_to_agent("triage", context)
 
     @function_tool
     async def transfer_to_support(self, context: RunContext_T) -> Agent:
-        await self.session.say("I'll transfer you to our Patient Support team who can help with your medical services request.")
+        await self.session.say("Je vous transfère à notre équipe de support patient qui pourra vous aider avec votre demande de services médicaux.")
         return await self._transfer_to_agent("support", context)
 
 
