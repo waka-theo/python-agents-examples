@@ -50,8 +50,11 @@ class BaseAgent(Agent):
         logger.info(f"Entering {agent_name}")
 
         userdata: UserData = self.session.userdata
-        if userdata.ctx and userdata.ctx.room:
-            await userdata.ctx.room.local_participant.set_attributes({"agent": agent_name})
+        try:
+            if userdata.ctx and userdata.ctx.room and userdata.ctx.room.isconnected():
+                await userdata.ctx.room.local_participant.set_attributes({"agent": agent_name})
+        except Exception:
+            pass  # Room not yet connected, skip setting attributes
 
         chat_ctx = self.chat_ctx.copy()
 
