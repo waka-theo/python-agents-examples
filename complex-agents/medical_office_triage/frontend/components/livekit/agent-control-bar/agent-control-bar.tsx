@@ -162,8 +162,8 @@ export function AgentControlBar({
             className="font-mono"
           >
             <PhoneDisconnectIcon weight="bold" />
-            <span className="hidden md:inline">END CALL</span>
-            <span className="inline md:hidden">END</span>
+            <span className="hidden md:inline">TERMINER L'APPEL</span>
+            <span className="inline md:hidden">FIN</span>
           </Button>
         )}
       </div>

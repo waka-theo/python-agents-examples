@@ -29,10 +29,10 @@ export const APP_CONFIG_DEFAULTS: AppConfig = {
   supportsScreenShare: false,
   isPreConnectBufferEnabled: true,
 
-  logo: '/lk-logo.svg',
-  accent: '#0891b2',
-  logoDark: '/lk-logo-dark.svg',
-  accentDark: '#22d3ee',
+  logo: '/logo-FranceCare.png',
+  accent: '#1e3a5f',
+  logoDark: '/logo-FranceCare.png',
+  accentDark: '#ef4444',
   startButtonText: 'Démarrer l\'appel',
 
   // for LiveKit Cloud Sandbox
